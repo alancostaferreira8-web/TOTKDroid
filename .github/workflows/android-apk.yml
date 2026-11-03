@@ -38,7 +38,10 @@ jobs:
       - name: Build native dependencies
         working-directory: android/deps
         run: bash build_deps.sh
-
+      - name: Build FFmpeg
+        working-directory: android/deps
+        run: |
+          ANDROID_NDK_LINUX="$ANDROID_HOME/ndk/30.0.16248370" bash build_ffmpeg.sh
       - name: Build debug APK
         working-directory: android/totkrecompandroid
         run: bash gradlew assembleDebug --no-daemon --stacktrace
