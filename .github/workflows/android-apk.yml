@@ -28,13 +28,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install Android SDK packages
         run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-36" "ndk;30.0.16248370" "cmake;3.30.4"
+          SDKMANAGER="$(find /usr/local/lib/android/sdk/cmdline-tools -name sdkmanager -type f | head -n 1)"
+          echo "SDKMANAGER=$SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses
+          "$SDKMANAGER" "platform-tools" "platforms;android-36" "ndk;30.0.16248370" "cmake;3.30.4"
 
       - name: Build native dependencies
         working-directory: android/deps
